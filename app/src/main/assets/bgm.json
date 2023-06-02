@@ -1,0 +1,48 @@
+{
+  "totalItem": 1,
+  "data": [
+    {
+      "totalScene": 6,
+      "parentScene": "王国城堡",
+      "parentSceneId": 1,
+      "scene": [
+        {
+          "sceneName": "王国城堡",
+          "sceneId": 13,
+          "bgmId": 42,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/42.mp3"
+        },
+        {
+          "sceneName": "城堡大厅",
+          "sceneId": 14,
+          "bgmId": 33,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/33.mp3"
+        },
+        {
+          "sceneName": "外交使馆",
+          "sceneId": 120,
+          "bgmId": 8,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/8.mp3"
+        },
+        {
+          "sceneName": "宴会厅",
+          "sceneId": 99,
+          "bgmId": 37,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/37.mp3"
+        },
+        {
+          "sceneName": "舞会厅",
+          "sceneId": 194,
+          "bgmId": 37,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/37.mp3"
+        },
+        {
+          "sceneName": "城堡露台",
+          "sceneId": 101,
+          "bgmId": 37,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/37.mp3"
+        }
+      ]
+    }
+  ]
+}
