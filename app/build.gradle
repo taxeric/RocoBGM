@@ -30,7 +30,7 @@ android {
         targetCompatibility JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
     }
 }
 
@@ -46,20 +46,41 @@ dependencies {
 
     implementation project(':libcompose')
 
-    //---- [lifecycle]
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
+    implementation "androidx.activity:activity-ktx:1.7.2"
+    implementation "androidx.fragment:fragment-ktx:1.5.7"
 
-    //---- [exo player]
-    implementation "androidx.media3:media3-exoplayer:1.0.2"
+    //vm & lifecycle
+    def lifecycle_version = "2.6.1"
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
 
-    //---- [hilt]
-    implementation "com.google.dagger:hilt-android:2.44"
-    kapt "com.google.dagger:hilt-compiler:2.44"
+    //coroutine
+    def coroutine_version = "1.6.4"
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version")
 
-    //---- [gson]
-    implementation 'com.google.code.gson:gson:2.10.1'
+    //exo player
+    def exp_player_version = "1.0.2"
+    implementation("androidx.media3:media3-exoplayer:$exp_player_version")
 
-    //---- [okhttp]
+    //hilt
+    def hilt_version = "2.44"
+    implementation("com.google.dagger:hilt-android:$hilt_version")
+    kapt("com.google.dagger:hilt-compiler:$hilt_version")
+
+    //room
+    def room_version = "2.5.1"
+    implementation("androidx.room:room-runtime:$room_version")
+    implementation("androidx.room:room-ktx:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
+
+    //gson
+    def gson_version = "2.10.1"
+    implementation("com.google.code.gson:gson:$gson_version")
+
+    //okhttp
     implementation(platform("com.squareup.okhttp3:okhttp-bom:4.10.0"))
     implementation("com.squareup.okhttp3:okhttp")
     implementation("com.squareup.okhttp3:logging-interceptor")
