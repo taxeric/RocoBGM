@@ -28,6 +28,7 @@ data class SceneData(
     @ColumnInfo val bgmUrl: String = "",
     @ColumnInfo val sceneId: Int = 0,
     @ColumnInfo val sceneName: String = "",
+    @ColumnInfo val duration: Long = 0L,
     @ColumnInfo val favourite: Boolean = false,
     @ColumnInfo val path: String = "",
     @ColumnInfo val uri: String = "",
@@ -44,5 +45,9 @@ data class SceneData(
 
         const val NoPlay = 0
         const val Playing = 1
+
+        val default = SceneData(
+            sceneName = "unknown"
+        )
     }
 }
