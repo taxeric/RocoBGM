@@ -31,7 +31,7 @@ class MainVM: ViewModel() {
                 val list = mutableListOf<SceneData>()
                 withContext(Dispatchers.IO) {
                     assets.open("bgm.json").use { ism ->
-                        val str = ism.readBytes().toString()
+                        val str = ism.readBytes().decodeToString()
                         val entity = gson.fromJson(str, SceneEntity::class.java)
                         entity.data.forEach { item ->
                             list.addAll(item.scene)

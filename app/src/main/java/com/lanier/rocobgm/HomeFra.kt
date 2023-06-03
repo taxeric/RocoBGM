@@ -3,6 +3,7 @@ package com.lanier.rocobgm
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
@@ -26,9 +27,11 @@ class HomeFra(
         mAdapter = MainAdapter(rv).apply {
             listener = object : OnItemClickEventListener<SceneData> {
                 override fun onItemClick(data: SceneData, position: Int) {
+                    println(">> $position ${data.sceneName}")
                 }
             }
         }
+        rv.adapter = mAdapter
     }
 
     override fun initListener() {
@@ -69,7 +72,7 @@ class MainAdapter(
 
     override fun onBindViewHolder(holder: MainVH, position: Int) {
         holder.bind(_data[position])
-        holder.itemView.setOnClickListener(this)
+        holder.singleLayout.setOnClickListener(this)
     }
 
     override fun onClick(v: View) {
@@ -82,6 +85,7 @@ class MainVH(
     view: View
 ): RecyclerView.ViewHolder(view) {
 
+    val singleLayout = view.findViewById<RelativeLayout>(R.id.singleLayout)
     private val title = view.findViewById<TextView>(R.id.tvTitle)
     private val state = view.findViewById<TextView>(R.id.tvState)
 
