@@ -15,4 +15,8 @@ object RoomHelper {
     suspend fun insertSceneData(vararg data: SceneData) {
         dao.insertSceneSongs(*data)
     }
+
+    suspend fun updateSceneData(sceneData: SceneData) {
+        dao.updateSceneSong(sceneData)
+    }
 }

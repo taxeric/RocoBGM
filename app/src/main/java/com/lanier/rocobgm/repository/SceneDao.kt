@@ -3,6 +3,7 @@ package com.lanier.rocobgm.repository
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import com.lanier.rocobgm.SceneData
 
 /**
@@ -17,4 +18,7 @@ interface SceneDao {
 
     @Insert
     suspend fun insertSceneSongs(vararg sceneData: SceneData)
+
+    @Update
+    suspend fun updateSceneSong(sceneData: SceneData)
 }
