@@ -7,7 +7,9 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * Created by Eric
@@ -28,10 +30,47 @@ class HomeFra(
             listener = object : OnItemClickEventListener<SceneData> {
                 override fun onItemClick(data: SceneData, position: Int) {
                     println(">> $position ${data.sceneName}")
+                    val internalFile = obtainDownloadFile(
+                        requireContext(),
+                        "bgm",
+                        data.bgmUrl.substring(
+                            data.bgmUrl.lastIndexOf('/') + 1,
+                            data.bgmUrl.length
+                        )
+                    )
+                    if (!internalFile.exists()) {
+                        refreshData(data, position, false)
+                        lifecycleScope.launch {
+                            val responseBody = withContext(Dispatchers.Default) {
+                                getResponseBody(data.bgmUrl) {
+                                    println(">>>> connect err ${it.message}")
+                                }
+                            }
+                            responseBody?.downloadFileWithProgress(internalFile) {
+                                println(">>>> error ${it.message}")
+                            }?.collect {
+                                if (it is DownloadStatus.Progress) {
+                                    println(">>>> ${it.percent}")
+                                }
+                                if (it is DownloadStatus.Complete) {
+                                    println(">>>> download complete")
+                                    refreshData(data, position)
+                                }
+                            }
+                        }
+                    } else {
+                        refreshData(data, position)
+                    }
                 }
             }
         }
         rv.adapter = mAdapter
+    }
+
+    private fun refreshData(data: SceneData, position: Int, downloaded: Boolean = true) {
+        val mData = data.copy(downloaded = downloaded)
+        mAdapter.notifyItem(mData, position)
+        vm.updateSceneData(mData)
     }
 
     override fun initListener() {
@@ -60,6 +99,11 @@ class MainAdapter(
             notifyDataSetChanged()
         }
 
+    fun notifyItem(data: SceneData, position: Int) {
+        _data[position] = data
+        notifyItemChanged(position)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainVH {
         return MainVH(
             LayoutInflater
@@ -85,12 +129,14 @@ class MainVH(
     view: View
 ): RecyclerView.ViewHolder(view) {
 
-    val singleLayout = view.findViewById<RelativeLayout>(R.id.singleLayout)
+    val singleLayout: RelativeLayout = view.findViewById(R.id.singleLayout)
     private val title = view.findViewById<TextView>(R.id.tvTitle)
-    private val state = view.findViewById<TextView>(R.id.tvState)
+    private val playState = view.findViewById<TextView>(R.id.tvPlayState)
+    private val downloadState = view.findViewById<TextView>(R.id.tvDownloadState)
 
     fun bind(data: SceneData) {
         title.text = data.sceneName
-        state.text = "${data.playState}"
+        downloadState.text = if (data.downloaded) {"ok"} else "${data.downloadState}"
+        playState.text = "${data.playState}"
     }
 }

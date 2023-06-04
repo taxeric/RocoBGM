@@ -47,4 +47,10 @@ class MainVM: ViewModel() {
             }
         }
     }
+
+    fun updateSceneData(sceneData: SceneData) {
+        viewModelScope.launch {
+            RoomHelper.updateSceneData(sceneData)
+        }
+    }
 }

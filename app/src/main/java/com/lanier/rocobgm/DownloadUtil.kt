@@ -7,8 +7,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import okhttp3.ResponseBody
 import java.io.File
+import java.net.Proxy
 
 /**
  * Created by Eric
@@ -18,6 +21,37 @@ sealed interface DownloadStatus{
     object Idle: DownloadStatus
     data class Progress(val percent: Int): DownloadStatus
     data class Complete(val success: Boolean, val file: File?): DownloadStatus
+}
+
+lateinit var okHttpClient: OkHttpClient
+fun initClient(
+    proxy: Proxy? = null
+) {
+    if (::okHttpClient.isInitialized) {
+        return
+    }
+    okHttpClient = OkHttpClient.Builder()
+        .proxy(proxy)
+        .build()
+}
+
+fun getResponseBody(
+    url: String,
+    client: OkHttpClient = okHttpClient,
+    onFailure: (Throwable) -> Unit = {}
+): ResponseBody? {
+    val request = Request.Builder()
+        .get()
+        .url(url)
+        .build()
+    return try {
+        client.newCall(request)
+            .execute()
+            .body
+    } catch (e: Throwable) {
+        onFailure.invoke(e)
+        null
+    }
 }
 
 /**
