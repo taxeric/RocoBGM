@@ -54,12 +54,14 @@ class HomeFra(
                                 }
                                 if (it is DownloadStatus.Complete) {
                                     println(">>>> download complete")
-                                    refreshData(data, position)
+                                    refreshData(data, position, filepath = internalFile.absolutePath)
                                 }
                             }
                         }
                     } else {
-                        refreshData(data, position)
+                        if (!data.downloaded || data.path.isEmpty()) {
+                            refreshData(data, position, filepath = internalFile.absolutePath)
+                        }
                     }
                 }
             }
@@ -67,8 +69,14 @@ class HomeFra(
         rv.adapter = mAdapter
     }
 
-    private fun refreshData(data: SceneData, position: Int, downloaded: Boolean = true) {
-        val mData = data.copy(downloaded = downloaded)
+    private fun refreshData(
+        data: SceneData,
+        position: Int,
+        downloaded: Boolean = true,
+        filepath: String = "",
+        uri: String = ""
+    ) {
+        val mData = data.copy(downloaded = downloaded, path = filepath, uri = uri)
         mAdapter.notifyItem(mData, position)
         vm.updateSceneData(mData)
     }
