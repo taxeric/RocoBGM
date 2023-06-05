@@ -9,9 +9,11 @@ import android.content.Context
 interface IPlayEvent {
 
     fun init(context: Context)
+    @Deprecated("..")
     fun prepare(data: SceneData)
     fun play(data: SceneData)
     fun pause()
     fun resume()
     fun stop()
+    fun release()
 }

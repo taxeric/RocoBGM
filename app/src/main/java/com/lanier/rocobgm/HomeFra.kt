@@ -59,9 +59,10 @@ class HomeFra(
                             }
                         }
                     } else {
-                        if (!data.downloaded || data.path.isEmpty()) {
+                        if (!data.downloaded && data.path.isEmpty()) {
                             refreshData(data, position, filepath = internalFile.absolutePath)
                         }
+                        play(data)
                     }
                 }
             }
@@ -79,6 +80,12 @@ class HomeFra(
         val mData = data.copy(downloaded = downloaded, path = filepath, uri = uri)
         mAdapter.notifyItem(mData, position)
         vm.updateSceneData(mData)
+    }
+
+    private fun play(sceneData: SceneData) {
+        playStateFlow.tryEmit(
+            PlayDataState.PlayData(sceneData)
+        )
     }
 
     override fun initListener() {
@@ -138,7 +145,7 @@ class MainVH(
 ): RecyclerView.ViewHolder(view) {
 
     val singleLayout: RelativeLayout = view.findViewById(R.id.singleLayout)
-    private val title = view.findViewById<TextView>(R.id.tvTitle)
+    private val title = view.findViewById<TextView>(R.id.tvSceneTitle)
     private val playState = view.findViewById<TextView>(R.id.tvPlayState)
     private val downloadState = view.findViewById<TextView>(R.id.tvDownloadState)
 

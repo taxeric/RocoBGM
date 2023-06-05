@@ -6,15 +6,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
  * Created by Eric
  * on 2023/6/2
  */
-data class PlaySongState(
-    val playList: List<SceneData> = listOf(),
-    val curPlaySong: SceneData = SceneData.default,
-    val isPlaying: Boolean = false,
-    val curDuration: Long = 0L,
-) {
-    companion object {
-        val default = PlaySongState()
-    }
+
+sealed interface PlayDataState {
+    object Idle: PlayDataState
+    data class PlayData(val data: SceneData): PlayDataState
+    data class PlayState(val playing: Boolean): PlayDataState
+    data class LoadingState(val loading: Boolean): PlayDataState
+    data class PlayDuration(val percent: Int): PlayDataState
 }
 
-val playStateFlow = MutableStateFlow(PlaySongState.default)
+val playStateFlow = MutableStateFlow<PlayDataState>(PlayDataState.Idle)

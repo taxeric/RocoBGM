@@ -7,7 +7,7 @@
     android:layout_height="48dp">
 
     <TextView
-        android:id="@+id/tvTitle"
+        android:id="@+id/tvSceneTitle"
         android:textColor="@color/black"
         android:gravity="center|start"
         android:layout_width="match_parent"

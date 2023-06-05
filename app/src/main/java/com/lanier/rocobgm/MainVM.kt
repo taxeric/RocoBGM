@@ -16,10 +16,76 @@ import kotlinx.coroutines.withContext
  * Created by Eric
  * on 2023/6/1
  */
-class MainVM: ViewModel() {
+class MainVM(
+    private val environment: SongEnvironment
+): ViewModel() {
+
+    init {
+        /*viewModelScope.launch {
+            environment.contentDuration.collect {
+                RoomHelper.updateSceneData(
+                    environment.playSceneData.value.copy(
+                        duration = it
+                    )
+                )
+            }
+        }*/
+        viewModelScope.launch {
+            environment.loading.collect {
+                playStateFlow.tryEmit(
+                    PlayDataState.LoadingState(it)
+                )
+            }
+        }
+        viewModelScope.launch {
+            environment.playing.collect {
+                playStateFlow.tryEmit(
+                    PlayDataState.PlayState(it)
+                )
+            }
+        }
+        viewModelScope.launch {
+            environment.duration.collect {
+                playStateFlow.tryEmit(
+                    PlayDataState.PlayDuration(it)
+                )
+            }
+        }
+        viewModelScope.launch {
+            environment.playbackState.collect {
+            }
+        }
+        viewModelScope.launch { 
+            playActionFlow.collect {
+                when (it) {
+                    PlayAction.Idle -> {}
+                    PlayAction.Pause -> {
+                        environment.pause()
+                    }
+                    PlayAction.Resume -> {
+                        environment.resume()
+                    }
+                    PlayAction.Stop -> {
+                        environment.stop()
+                    }
+                    PlayAction.Release -> {
+                        environment.release()
+                    }
+                }
+            }
+        }
+    }
 
     private val _sceneFlow = MutableStateFlow(emptyList<SceneData>())
     val sceneFlow: StateFlow<List<SceneData>> = _sceneFlow.asStateFlow()
+
+    fun lazyInit() {}
+
+    fun play(sceneData: SceneData) {
+        viewModelScope.launch {
+            environment.play(sceneData)
+        }
+    }
 
     fun obtainData(assets: AssetManager) {
         viewModelScope.launch {
