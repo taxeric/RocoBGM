@@ -87,31 +87,45 @@ class MainVM(
         }
     }
 
-    fun obtainData(assets: AssetManager) {
+    fun obtainData(assets: AssetManager, syncFromAssets: Boolean = false) {
         viewModelScope.launch {
-            val data = withContext(Dispatchers.IO) {
-                RoomHelper.getAllSceneData()
-            }
-            if (data.isEmpty()) {
-                val gson = Gson()
-                val list = mutableListOf<SceneData>()
+            if (syncFromAssets) {
+                val list = obtainDataFromAssets(assets)
                 withContext(Dispatchers.IO) {
-                    assets.open("bgm.json").use { ism ->
-                        val str = ism.readBytes().decodeToString()
-                        val entity = gson.fromJson(str, SceneEntity::class.java)
-                        entity.data.forEach { item ->
-                            list.addAll(item.scene)
-                        }
-                    }
-                }
-                withContext(Dispatchers.IO) {
+                    RoomHelper.deleteAllSceneData()
                     RoomHelper.insertSceneData(*list.toTypedArray())
                 }
                 _sceneFlow.tryEmit(list)
             } else {
-                _sceneFlow.tryEmit(data)
+                val data = withContext(Dispatchers.IO) {
+                    RoomHelper.getAllSceneData()
+                }
+                if (data.isEmpty()) {
+                    val list = obtainDataFromAssets(assets)
+                    withContext(Dispatchers.IO) {
+                        RoomHelper.insertSceneData(*list.toTypedArray())
+                    }
+                    _sceneFlow.tryEmit(list)
+                } else {
+                    _sceneFlow.tryEmit(data)
+                }
             }
         }
+    }
+
+    private suspend fun obtainDataFromAssets(assets: AssetManager): List<SceneData> {
+        val gson = Gson()
+        val list = mutableListOf<SceneData>()
+        withContext(Dispatchers.IO) {
+            assets.open("bgm.json").use { ism ->
+                val str = ism.readBytes().decodeToString()
+                val entity = gson.fromJson(str, SceneEntity::class.java)
+                entity.data.forEach { item ->
+                    list.addAll(item.scene)
+                }
+            }
+        }
+        return list
     }
 
     fun updateSceneData(sceneData: SceneData) {

@@ -21,4 +21,7 @@ interface SceneDao {
 
     @Update
     suspend fun updateSceneSong(sceneData: SceneData)
+
+    @Query("delete from SceneData")
+    suspend fun deleteAll()
 }

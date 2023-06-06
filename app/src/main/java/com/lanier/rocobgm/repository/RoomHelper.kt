@@ -19,4 +19,8 @@ object RoomHelper {
     suspend fun updateSceneData(sceneData: SceneData) {
         dao.updateSceneSong(sceneData)
     }
+
+    suspend fun deleteAllSceneData() {
+        dao.deleteAll()
+    }
 }
