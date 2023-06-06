@@ -1,5 +1,5 @@
 {
-  "totalItem": 1,
+  "totalItem": 2,
   "data": [
     {
       "totalScene": 6,
@@ -41,6 +41,67 @@
           "sceneId": 101,
           "bgmId": 37,
           "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/37.mp3"
+        }
+      ]
+    },
+    {
+      "totalScene": 6,
+      "parentScene": "雪人谷",
+      "parentSceneId": 2,
+      "scene": [
+        {
+          "sceneName": "雪人谷",
+          "sceneId": 17,
+          "bgmId": 1,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/1.mp3"
+        },
+        {
+          "sceneName": "怀特冰川",
+          "sceneId": 44,
+          "bgmId": 17,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/17.mp3"
+        },
+        {
+          "sceneName": "怀特冰山",
+          "sceneId": 45,
+          "bgmId": 17,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/17.mp3"
+        },
+        {
+          "sceneName": "怀特峰",
+          "sceneId": 46,
+          "bgmId": 18,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/18.mp3"
+        },
+        {
+          "sceneName": "白落落村",
+          "sceneId": 100,
+          "bgmId": 38,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/38.mp3"
+        },
+        {
+          "sceneName": "晶晶雪域",
+          "sceneId": 126,
+          "bgmId": 38,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/38.mp3"
+        },
+        {
+          "sceneName": "圣诞小屋",
+          "sceneId": 285,
+          "bgmId": 36,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/36.mp3"
+        },
+        {
+          "sceneName": "地下冰窟",
+          "sceneId": 406,
+          "bgmId": 32,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/32.mp3"
+        },
+        {
+          "sceneName": "源码冰岛",
+          "sceneId": 425,
+          "bgmId": 1,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/1.mp3"
         }
       ]
     }
