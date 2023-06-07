@@ -62,6 +62,10 @@ class SongEnvironment @Inject constructor(): IPlayEvent {
         }
 
         override fun onPlaybackStateChanged(playbackState: Int) {
+            if (playbackState == ExoPlayer.STATE_ENDED) {
+                exoPlayer.seekTo(0)
+                exoPlayer.pause()
+            }
             _playbackState.tryEmit(playbackState)
         }
 

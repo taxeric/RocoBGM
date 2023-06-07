@@ -54,15 +54,18 @@ class HomeFra(
                                 }
                                 if (it is DownloadStatus.Complete) {
                                     println(">>>> download complete")
-                                    refreshData(data, position, filepath = internalFile.absolutePath)
+                                    val mData = refreshData(data, position, filepath = internalFile.absolutePath)
+                                    play(mData)
                                 }
                             }
                         }
                     } else {
-                        if (!data.downloaded && data.path.isEmpty()) {
+                        val mData = if (!data.downloaded && data.path.isEmpty()) {
                             refreshData(data, position, filepath = internalFile.absolutePath)
+                        } else {
+                            data
                         }
-                        play(data)
+                        play(mData)
                     }
                 }
             }
@@ -76,10 +79,11 @@ class HomeFra(
         downloaded: Boolean = true,
         filepath: String = "",
         uri: String = ""
-    ) {
+    ): SceneData {
         val mData = data.copy(downloaded = downloaded, path = filepath, uri = uri)
         mAdapter.notifyItem(mData, position)
         vm.updateSceneData(mData)
+        return mData
     }
 
     private fun play(sceneData: SceneData) {
