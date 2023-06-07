@@ -45,7 +45,7 @@
       ]
     },
     {
-      "totalScene": 6,
+      "totalScene": 9,
       "parentScene": "雪人谷",
       "parentSceneId": 2,
       "scene": [
@@ -102,6 +102,103 @@
           "sceneId": 425,
           "bgmId": 1,
           "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/1.mp3"
+        }
+      ]
+    },
+    {
+      "totalScene": 15,
+      "parentScene": "宠物园",
+      "parentSceneId": 3,
+      "scene": [
+        {
+          "sceneName": "宠物园",
+          "sceneId": 18,
+          "bgmId": 10,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/10.mp3"
+        },
+        {
+          "sceneName": "索米亚草原",
+          "sceneId": 33,
+          "bgmId": 10,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/10.mp3"
+        },
+        {
+          "sceneName": "普拉塔草原",
+          "sceneId": 34,
+          "bgmId": 10,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/10.mp3"
+        },
+        {
+          "sceneName": "野外研究院",
+          "sceneId": 35,
+          "bgmId": 10,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/10.mp3"
+        },
+        {
+          "sceneName": "宠物农庄",
+          "sceneId": 97,
+          "bgmId": 10,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/10.mp3"
+        },
+        {
+          "sceneName": "独角仙踪",
+          "sceneId": 111,
+          "bgmId": 10,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/10.mp3"
+        },
+        {
+          "sceneName": "宠物梦工厂",
+          "sceneId": 115,
+          "bgmId": 10,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/10.mp3"
+        },
+        {
+          "sceneName": "蛋内世界",
+          "sceneId": 130,
+          "bgmId": 47,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/47.mp3"
+        },
+        {
+          "sceneName": "巨石阵",
+          "sceneId": 158,
+          "bgmId": 65,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/65.mp3"
+        },
+        {
+          "sceneName": "巨石残垣",
+          "sceneId": 161,
+          "bgmId": 65,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/65.mp3"
+        },
+        {
+          "sceneName": "巨石水晶台",
+          "sceneId": 200,
+          "bgmId": 65,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/65.mp3"
+        },
+        {
+          "sceneName": "水晶地穴",
+          "sceneId": 278,
+          "bgmId": 67,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/67.mp3"
+        },
+        {
+          "sceneName": "幽影山谷",
+          "sceneId": 287,
+          "bgmId": 49,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/49.mp3"
+        },
+        {
+          "sceneName": "黑暗祭台",
+          "sceneId": 288,
+          "bgmId": 100,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/100.mp3"
+        },
+        {
+          "sceneName": "复活祭台",
+          "sceneId": 290,
+          "bgmId": 102,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/102.mp3"
         }
       ]
     }
