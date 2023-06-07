@@ -1,6 +1,6 @@
 package com.lanier.rocobgm
 
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
 
 /**
  * Created by Eric
@@ -15,4 +15,4 @@ sealed interface PlayAction {
     object Release: PlayAction
 }
 
-val playActionFlow = MutableStateFlow<PlayAction>(PlayAction.Idle)
+val playActionFlow = MutableSharedFlow<PlayAction>(extraBufferCapacity = 1)
