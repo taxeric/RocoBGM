@@ -6,9 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        app:menu="@menu/main_menu"
+        style="@style/AppBarStyle"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <FrameLayout
         android:id="@+id/frameLayout"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintBottom_toTopOf="@+id/layoutController"
         android:layout_width="match_parent"
         android:layout_height="0dp"/>
@@ -21,20 +29,8 @@
         android:layout_width="match_parent"
         android:layout_height="64dp">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/ivAvatar"
-            android:src="#F4F4F4"
-            app:shapeAppearance="@style/CircleStyleCorner8Dp"
-            android:elevation="4dp"
-            android:layout_marginStart="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_width="48dp"
-            android:layout_height="48dp"/>
-
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:background="@drawable/bg_solid_ececec_corner_end_50"
+            style="@style/ControllerBarStyle"
             android:layout_marginStart="42dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -44,25 +40,67 @@
 
             <TextView
                 android:id="@+id/tvTitle"
-                android:gravity="center_vertical"
-                android:maxLines="1"
-                android:ellipsize="end"
+                style="@style/CommonTvStyle1"
                 android:paddingEnd="12dp"
-                android:paddingStart="24dp"
+                android:paddingStart="28dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/ivController"
+                app:layout_constraintEnd_toStartOf="@+id/progressBar"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"/>
 
-            <ImageView
-                android:id="@+id/ivController"
-                android:src="@drawable/baseline_play_arrow_24"
-                android:layout_marginEnd="24dp"
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:visibility="invisible"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toStartOf="@+id/durationController"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="34dp"
+                android:layout_height="34dp"/>
+
+            <RelativeLayout
+                android:id="@+id/durationController"
+                android:layout_marginEnd="22dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_width="32dp"
-                android:layout_height="32dp"/>
+                android:layout_width="34dp"
+                android:layout_height="34dp">
+
+                <androidx.compose.ui.platform.ComposeView
+                    android:id="@+id/composeDurationBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+                <ImageView
+                    android:id="@+id/ivController"
+                    android:src="@drawable/baseline_play_arrow_24"
+                    android:padding="4dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </RelativeLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:src="@drawable/svg_record_player"
+            app:shapeAppearance="@style/CircleStyleCorner8Dp"
+            android:layout_marginStart="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/ivAvatar"
+            android:src="#F4F4F4"
+            android:elevation="4dp"
+            app:shapeAppearance="@style/CircleStyleCorner4Dp"
+            android:layout_marginStart="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
