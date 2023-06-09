@@ -31,7 +31,9 @@ class PreferenceFra(
 
     override fun initView(view: View) {
         composePreference = view.findViewById(R.id.composePreference)
-        composePreference.setContent {  }
+        composePreference.setContent {
+            MainView()
+        }
     }
 }
 
@@ -43,17 +45,22 @@ private fun MainView(
         modifier = modifier
             .verticalScroll(rememberScrollState())
     ) {
-        CachePath {
-        }
+        Play()
+        CachePath()
     }
 }
 
 @Composable
-private fun CachePath(
-    onClick: () -> Unit
-) {
-    PreferenceItemTitle(title = "缓存路径")
-    SingleKV(key = "设定缓存路径", value = "aaa", onClick)
+private fun Play() {
+    PreferenceItemTitle(title = "播放")
+    SingleKV(key = "源文件", value = "缓存后播放") {}
+    SingleKV(key = "播放模式", value = "自动重置进度") {}
+}
+
+@Composable
+private fun CachePath() {
+    PreferenceItemTitle(title = "缓存")
+    SingleKV(key = "缓存路径", value = "data") {}
 }
 
 @Composable
@@ -66,10 +73,9 @@ private fun PreferenceItemTitle(
     ) {
         Text(
             text = title,
-            fontSize = 12.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
-                .padding(8.dp)
+                .padding(horizontal = 12.dp, vertical = 8.dp)
         )
     }
 }
@@ -91,17 +97,18 @@ private fun SingleKV(
             ) {
                 onClick.invoke()
             }
+            .padding(vertical = 12.dp)
     ) {
         Text(
             text = key,
-            fontSize = 18.sp,
+            fontSize = 20.sp,
             modifier = Modifier
-                .padding(horizontal = 8.dp, vertical = 4.dp)
+                .padding(horizontal = 12.dp, vertical = 4.dp)
         )
         Text(
             text = value,
             modifier = Modifier
-                .padding(horizontal = 8.dp, vertical = 4.dp)
+                .padding(horizontal = 12.dp, vertical = 4.dp)
         )
     }
 }
