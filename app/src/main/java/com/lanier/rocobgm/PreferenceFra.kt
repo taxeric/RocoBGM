@@ -14,6 +14,7 @@ import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -65,7 +66,8 @@ private fun CachePath() {
 
 @Composable
 private fun PreferenceItemTitle(
-    title: String
+    title: String,
+    titleColor: Color = Color(0xFFB7D1AA)
 ) {
     Box(
         modifier = Modifier
@@ -73,6 +75,7 @@ private fun PreferenceItemTitle(
     ) {
         Text(
             text = title,
+            color = titleColor,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .padding(horizontal = 12.dp, vertical = 8.dp)
