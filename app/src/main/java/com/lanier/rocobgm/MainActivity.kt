@@ -14,6 +14,7 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.imageview.ShapeableImageView
 import com.lanier.rocobgm.compose.ComposeDuration
@@ -54,6 +55,9 @@ class MainActivity : AppCompatActivity() {
     private val toolbar by lazy {
         findViewById<MaterialToolbar>(R.id.toolbar)
     }
+    private val viewPager by lazy {
+        findViewById<ViewPager2>(R.id.viewPager)
+    }
 
     private var isPlaying = false
 
@@ -74,13 +78,10 @@ class MainActivity : AppCompatActivity() {
             ComposeDuration(percentFlow)
         }
 
+        viewPager.adapter = VPAdapter(this)
+
         environment.init(this)
         vm.lazyInit()
-
-        supportFragmentManager
-            .commit {
-                add(R.id.frameLayout, HomeFra(), "home")
-            }
 
         lifecycleScope.launch {
             playStateFlow.collect {
@@ -123,6 +124,9 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.menu_sync) {
             vm.obtainData(assets, true)
+        }
+        if (item.itemId == R.id.menu_settings) {
+            viewPager.currentItem = 1
         }
         return super.onOptionsItemSelected(item)
     }
