@@ -4,6 +4,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -22,8 +23,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
  */
 @Composable
 fun ComposeDuration(
-    percentFlow: MutableStateFlow<Int>,
-    maxPercent: Int = 100,
+    playDurationFlow: MutableStateFlow<Long>,
+    maxDurationFlow: MutableStateFlow<Long>,
     progressBarStartColor: Color = Color.White,
     progressBarEndColor: Color = Color.Black,
     progressBarWidth: Dp = 7.dp,
@@ -32,12 +33,19 @@ fun ComposeDuration(
     roundBorder: Boolean = false,
     startAngle: Float = 0f
 ) {
-    val percent = percentFlow.collectAsState().value
+    val percent = playDurationFlow.collectAsState().value
+    val maxDuration = maxDurationFlow.collectAsState().value
+    val target = remember(percent, maxDuration) {
+        if (maxDuration > 0L) {
+            (percent.toFloat() / maxDuration.toFloat()) * 360f
+        } else {
+            0f
+        }
+    }
     Canvas(
         modifier = Modifier
             .fillMaxSize()
     ) {
-        val target = (percent / maxPercent) * 360f
         val canvasSize = size.minDimension
         val radius = canvasSize / 2 - maxOf(backgroundProgressBarWidth, progressBarWidth).toPx() / 2
         drawCircle(
