@@ -66,5 +66,5 @@
     <color name="md_theme_dark_scrim">#000000</color>
 
     <color name="main_menu_base_tint">@color/white</color>
-    <color name="player_action_play_pause">@color/md_theme_light_primary</color>
+    <color name="player_action_play_pause">@color/md_theme_dark_primary</color>
 </resources>
