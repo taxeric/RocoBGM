@@ -1,13 +1,20 @@
 package com.lanier.rocobgm
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import androidx.core.net.toUri
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
+import com.lanier.rocobgm.datastore.AppPreferences
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import java.io.File
 import javax.inject.Inject
 
@@ -15,10 +22,15 @@ import javax.inject.Inject
  * Created by Eric
  * on 2023/6/2
  */
-class SongEnvironment @Inject constructor(): IPlayEvent {
+@DelicateCoroutinesApi
+class SongEnvironment @Inject constructor(
+    @ApplicationContext private val context: Context,
+    private val appPreferences: AppPreferences,
+): IPlayEvent {
 
     private lateinit var exoPlayer : ExoPlayer
-    val playSceneData = MutableStateFlow(SceneData.default)
+    private val _playSceneData = MutableStateFlow(SceneData.default)
+    val playSceneData: StateFlow<SceneData> = _playSceneData.asStateFlow()
 
     private val _loading = MutableStateFlow(false)
     val loading: StateFlow<Boolean> = _loading.asStateFlow()
@@ -26,16 +38,43 @@ class SongEnvironment @Inject constructor(): IPlayEvent {
     private val _contentDuration = MutableStateFlow(0L)
     val contentDuration: StateFlow<Long> = _contentDuration.asStateFlow()
 
-    private val _duration = MutableStateFlow(0)
-    val duration: StateFlow<Int> = _duration.asStateFlow()
+    private val _playDuration = MutableStateFlow(0L)
+    val playDuration: StateFlow<Long> = _playDuration.asStateFlow()
 
     private val _playing = MutableStateFlow(false)
     val playing: StateFlow<Boolean> = _playing.asStateFlow()
 
+    private val _stopped = MutableStateFlow(false)
+    private val stopped: StateFlow<Boolean> = _stopped.asStateFlow()
+
     private val _playbackState = MutableStateFlow(Player.STATE_IDLE)
     val playbackState: StateFlow<Int> = _playbackState.asStateFlow()
 
-    override fun init(context: Context) {
+    private var durationRunnable = Runnable {  }
+    private val songHandler = Handler(Looper.getMainLooper())
+
+    private val _playOriginalType = MutableStateFlow(0)
+    private val playOriginalType: StateFlow<Int> = _playOriginalType.asStateFlow()
+
+    private val _playbackMode = MutableStateFlow(0)
+    private val playbackMode: StateFlow<Int> = _playbackMode.asStateFlow()
+
+    init {
+        GlobalScope.launch {
+            launch {
+                appPreferences.playOriginalFlow.collect {
+                    _playOriginalType.tryEmit(it)
+                }
+            }
+            launch {
+                appPreferences.playbackModeFlow.collect {
+                    _playbackMode.tryEmit(it)
+                }
+            }
+        }
+    }
+
+    override fun init() {
         exoPlayer = ExoPlayer
             .Builder(context)
             .build()
@@ -47,14 +86,6 @@ class SongEnvironment @Inject constructor(): IPlayEvent {
     private val listener = object : Player.Listener{
         override fun onIsLoadingChanged(isLoading: Boolean) {
             _loading.tryEmit(isLoading)
-            if (!isLoading) {
-//                _contentDuration.tryEmit(exoPlayer.contentDuration)
-//                if (playSceneData.value.duration <= 0L) {
-//                    playSceneData.tryEmit(
-//                        playSceneData.value.copy(duration = exoPlayer.contentDuration)
-//                    )
-//                }
-            }
         }
 
         override fun onIsPlayingChanged(isPlaying: Boolean) {
@@ -68,40 +99,38 @@ class SongEnvironment @Inject constructor(): IPlayEvent {
             }
             _playbackState.tryEmit(playbackState)
         }
-
-        override fun onPositionDiscontinuity(
-            oldPosition: Player.PositionInfo,
-            newPosition: Player.PositionInfo,
-            reason: Int
-        ) {
-//            val percent = newPosition.positionMs / playSceneData.value.duration.toFloat()
-//            _duration.tryEmit((percent * 100).toInt())
-        }
-
-        override fun onMaxSeekToPreviousPositionChanged(maxSeekToPreviousPositionMs: Long) {
-            super.onMaxSeekToPreviousPositionChanged(maxSeekToPreviousPositionMs)
-        }
-    }
-
-    @Deprecated("..")
-    override fun prepare(data: SceneData) {
-        exoPlayer.setMediaItem(MediaItem.fromUri(data.uri))
-        exoPlayer.prepare()
     }
 
     override fun play(data: SceneData) {
         if (data.path.isEmpty() && data.uri.isEmpty()) {
             return
         }
-        if (data.sceneId == playSceneData.value.sceneId) {
-            return
-        }
-        playSceneData.tryEmit(data)
         val uri = File(data.path).toUri()
         exoPlayer.setMediaItem(MediaItem.fromUri(uri))
 //        exoPlayer.setMediaItem(MediaItem.fromUri(data.bgmUrl))
         exoPlayer.prepare()
         exoPlayer.play()
+
+        _stopped.tryEmit(false)
+        _playSceneData.tryEmit(data)
+
+        durationRunnable = Runnable {
+            snapTo(
+                duration = if (exoPlayer.duration != -1L) exoPlayer.currentPosition else 0L
+            )
+            if (exoPlayer.contentDuration > 0L) {
+                _contentDuration.tryEmit(exoPlayer.contentDuration)
+            }
+            songHandler.postDelayed(durationRunnable, 1000)
+        }
+        songHandler.post(durationRunnable)
+    }
+
+    override fun snapTo(duration: Long, autoIncrement: Boolean) {
+        _playDuration.tryEmit(duration)
+        if (!autoIncrement) {
+            exoPlayer.seekTo(duration)
+        }
     }
 
     override fun pause() {
@@ -111,13 +140,16 @@ class SongEnvironment @Inject constructor(): IPlayEvent {
     }
 
     override fun resume() {
-        if (!exoPlayer.isPlaying) {
+        if (stopped.value && playSceneData.value.path.isNotEmpty()) {
+            play(playSceneData.value)
+        } else {
             exoPlayer.play()
         }
     }
 
     override fun stop() {
         exoPlayer.stop()
+        _stopped.tryEmit(true)
     }
 
     override fun release() {

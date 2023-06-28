@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.RadioButton
 import androidx.compose.material.Text
@@ -38,17 +39,8 @@ fun CommonListDialog(
     Dialog(onDismissRequest = { onDismissRequest.invoke(-1) }) {
         Column(
             modifier = Modifier
+                .padding(horizontal = 8.dp, vertical = 24.dp)
         ) {
-            Text(
-                text = desc,
-                color = ExtendTheme.colors.commonColor,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-            )
-            Spacer(
-                modifier = Modifier
-                    .height(18.dp)
-            )
             list.forEachIndexed { index, value ->
                 Row(
                     modifier = Modifier

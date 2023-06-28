@@ -5,28 +5,25 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
-import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.lanier.rocobgm.CacheConstantEntity
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
+import javax.inject.Inject
 
 /**
  * Created by Eric
  * on 2023/6/12
  */
-private val Context.appDataStore: DataStore<Preferences> by preferencesDataStore(
-    name = "local_preferences"
-)
-
-class AppPreferences(
+class AppPreferences @Inject constructor(
     private val context: Context
 ) {
 
     companion object{
+        private val Context.appDataStore: DataStore<Preferences> by preferencesDataStore(
+            name = "local_preferences"
+        )
 
         //源文件播放形式
         private const val P_K_PLAY_ORIGINAL = "p_k_play_original"
@@ -39,7 +36,7 @@ class AppPreferences(
         private const val P_K_CACHE_FILENAME_TYPE = "p_k_cache_filename_type"
 
         private val KeyPlayOriginal = intPreferencesKey(P_K_PLAY_ORIGINAL)
-        private val KeyPlayMode = intPreferencesKey(P_K_PLAY_MODE)
+        private val KeyPlaybackMode = intPreferencesKey(P_K_PLAY_MODE)
         private val KeyCachePath = intPreferencesKey(P_K_CACHE_PATH)
         private val KeyCacheFilenameType = intPreferencesKey(P_K_CACHE_FILENAME_TYPE)
     }
@@ -51,7 +48,7 @@ class AppPreferences(
         .map {
             CacheConstantEntity(
                 originalSongPlayMode = it[KeyPlayOriginal]?: 0,
-                playMode = it[KeyPlayMode]?: 0,
+                playMode = it[KeyPlaybackMode]?: 0,
                 cacheFilePath = it[KeyCachePath]?: 0,
                 cacheFilename = it[KeyCacheFilenameType]?: 0
             )
@@ -61,6 +58,10 @@ class AppPreferences(
         return runBlocking { data.last() }[KeyPlayOriginal]?: 0
     }
 
+    val playOriginalFlow = context.appDataStore.data.map {
+        it[KeyPlayOriginal]?: 0
+    }
+
     suspend fun updatePlayOriginal(value: Int) {
         context.appDataStore
             .edit {
@@ -68,14 +69,18 @@ class AppPreferences(
             }
     }
 
-    suspend fun getPlayMode(): Int {
-        return runBlocking { data.last() }[KeyPlayMode]?: 0
+    suspend fun getPlaybackMode(): Int {
+        return runBlocking { data.last() }[KeyPlaybackMode]?: 0
+    }
+
+    val playbackModeFlow = context.appDataStore.data.map {
+        it[KeyPlaybackMode]?: 0
     }
 
     suspend fun updatePlayMode(value: Int) {
         context.appDataStore
             .edit {
-                it[KeyPlayMode] = value
+                it[KeyPlaybackMode] = value
             }
     }
 
