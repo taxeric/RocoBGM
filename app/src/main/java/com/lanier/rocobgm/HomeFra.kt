@@ -5,16 +5,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 /**
  * Created by Eric
  * on 2023/6/1
  */
+@DelicateCoroutinesApi
 class HomeFra(
     override val layoutId: Int = R.layout.fra_home
 ) : BaseFra() {
@@ -30,42 +31,47 @@ class HomeFra(
             listener = object : OnItemClickEventListener<SceneData> {
                 override fun onItemClick(data: SceneData, position: Int) {
                     println(">> $position ${data.sceneName}")
-                    val internalFile = obtainDownloadFile(
-                        requireContext(),
-                        "bgm",
-                        data.bgmUrl.substring(
+                    val filename = if (CacheConstant.cacheFilename == 0) {
+                        val substring = data.bgmUrl.substring(
                             data.bgmUrl.lastIndexOf('/') + 1,
                             data.bgmUrl.length
                         )
-                    )
-                    if (!internalFile.exists()) {
-                        refreshData(data, position, false)
-                        lifecycleScope.launch {
-                            val responseBody = withContext(Dispatchers.Default) {
-                                getResponseBody(data.bgmUrl) {
-                                    println(">>>> connect err ${it.message}")
-                                }
-                            }
-                            responseBody?.downloadFileWithProgress(internalFile) {
-                                println(">>>> error ${it.message}")
-                            }?.collect {
-                                if (it is DownloadStatus.Progress) {
-                                    println(">>>> ${it.percent}")
-                                }
-                                if (it is DownloadStatus.Complete) {
-                                    println(">>>> download complete")
-                                    val mData = refreshData(data, position, filepath = internalFile.absolutePath)
-                                    play(mData)
-                                }
-                            }
-                        }
+                        "$substring.mp3"
                     } else {
-                        val mData = if (!data.downloaded && data.path.isEmpty()) {
-                            refreshData(data, position, filepath = internalFile.absolutePath)
-                        } else {
-                            data
-                        }
-                        play(mData)
+                        "${data.sceneName}.mp3"
+                    }
+                    if (CacheConstant.originalSongPlayMode == 0) {
+                        vm.downloadMp3(
+                            context = requireContext(),
+                            filename = filename,
+                            fileUrl = data.bgmUrl,
+                            downloadToInternalPath = CacheConstant.cacheFilePath == 0,
+                            fileExist = { exist, filepath ->
+                                if (exist) {
+                                    val mData = if (!data.downloaded && data.path.isEmpty()) {
+                                        refreshData(data, position, filepath = filepath)
+                                    } else {
+                                        data
+                                    }
+                                    play(mData)
+                                } else {
+                                    refreshData(data, position, false)
+                                }
+                            },
+                            failure = {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "下载失败 ${it.message}",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            },
+                            downloadComplete = { path ->
+                                val mData = refreshData(data, position, filepath = path)
+                                play(mData)
+                            }
+                        )
+                    } else {
+                        play(data)
                     }
                 }
             }

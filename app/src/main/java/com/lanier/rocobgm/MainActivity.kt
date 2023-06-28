@@ -1,5 +1,6 @@
 package com.lanier.rocobgm
 
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -7,10 +8,10 @@ import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
-import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -18,24 +19,25 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.imageview.ShapeableImageView
 import com.lanier.rocobgm.compose.ComposeDuration
+import com.lanier.rocobgm.datastore.AppPreferences
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@DelicateCoroutinesApi
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    @Inject lateinit var environment: IPlayEvent
-    private val vm by viewModels<MainVM>(factoryProducer = {
-        object : ViewModelProvider.Factory{
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return MainVM(environment as SongEnvironment) as T
-            }
-        }
-    })
+    @Inject lateinit var localPreferences: AppPreferences
 
-    private val percentFlow = MutableStateFlow(0)
+    private val vm by viewModels<MainVM>()
+
+    private val durationFlow = MutableStateFlow(0L)
+    private val contentDurationFlow = MutableStateFlow(0L)
 
     private val ivAvatar by lazy {
         findViewById<ShapeableImageView>(R.id.ivAvatar)
@@ -67,6 +69,10 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
 
+        lifecycleScope.launch {
+            CacheConstant.bind(localPreferences.dataFlow.last())
+        }
+
         ivController.setOnClickListener {
             if (isPlaying) {
                 playActionFlow.tryEmit(PlayAction.Pause)
@@ -75,12 +81,17 @@ class MainActivity : AppCompatActivity() {
             }
         }
         composeDuration.setContent {
-            ComposeDuration(percentFlow)
+            ComposeDuration(
+                playDurationFlow = durationFlow,
+                maxDurationFlow = contentDurationFlow,
+                progressBarStartColor = Color(0xFF97D782),
+                progressBarEndColor = Color(0xFF326B24),
+                roundBorder = true
+            )
         }
 
         viewPager.adapter = VPAdapter(this)
 
-        environment.init(this)
         vm.lazyInit()
 
         lifecycleScope.launch {
@@ -100,8 +111,11 @@ class MainActivity : AppCompatActivity() {
                         tvTitle.text = it.data.sceneName
                         vm.play(it.data)
                     }
+                    is PlayDataState.PlayContentDuration -> {
+                        contentDurationFlow.tryEmit(it.contentDuration)
+                    }
                     is PlayDataState.PlayDuration -> {
-                        percentFlow.tryEmit(it.percent)
+                        durationFlow.tryEmit(it.duration)
                     }
                     is PlayDataState.PlayState -> {
                         isPlaying = it.playing
@@ -112,6 +126,20 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        when (newConfig.uiMode) {
+            Configuration.UI_MODE_NIGHT_YES -> {
+                AppCompatDelegate
+                    .setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }
+            Configuration.UI_MODE_NIGHT_NO -> {
+                AppCompatDelegate
+                    .setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
         }
     }
