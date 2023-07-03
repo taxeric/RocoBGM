@@ -14,7 +14,7 @@ fun ExtendTheme(
 ) {
     val theme = if (isSystemInDarkTheme()) extendDarkTextColorTheme else extendLightTextColorTheme
     CompositionLocalProvider(
-        LocalTextColorState provides theme
+        LocalExtensionColorState provides theme
     ) {
         content.invoke()
     }
@@ -22,7 +22,7 @@ fun ExtendTheme(
 
 object ExtendTheme {
 
-    val colors: TextColor
+    val colors: RocoColor
         @Composable
-        get() = LocalTextColorState.current
+        get() = LocalExtensionColorState.current
 }

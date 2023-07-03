@@ -352,14 +352,14 @@ private fun SingleKV(
     ) {
         Text(
             text = key,
-            color = ExtendTheme.colors.commonColor,
+            color = ExtendTheme.colors.commonTextColor,
             fontSize = 20.sp,
             modifier = Modifier
                 .padding(horizontal = 12.dp, vertical = 4.dp)
         )
         Text(
             text = value,
-            color = ExtendTheme.colors.commonColor,
+            color = ExtendTheme.colors.commonTextColor1,
             modifier = Modifier
                 .padding(horizontal = 12.dp, vertical = 4.dp)
         )

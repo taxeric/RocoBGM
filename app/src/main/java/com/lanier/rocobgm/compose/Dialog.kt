@@ -1,5 +1,6 @@
 package com.lanier.rocobgm.compose
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.RadioButton
 import androidx.compose.material.Text
 import androidx.compose.material3.TextButton
@@ -17,9 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 
 /**
@@ -39,7 +39,11 @@ fun CommonListDialog(
     Dialog(onDismissRequest = { onDismissRequest.invoke(-1) }) {
         Column(
             modifier = Modifier
-                .padding(horizontal = 8.dp, vertical = 24.dp)
+                .background(
+                    ExtendTheme.colors.commonBackgroundColor,
+                    RoundedCornerShape(12.dp)
+                )
+                .padding(horizontal = 8.dp, vertical = 12.dp)
         ) {
             list.forEachIndexed { index, value ->
                 Row(
@@ -48,7 +52,7 @@ fun CommonListDialog(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     RadioButton(
-                        selected = index == defaultSelectedIndex,
+                        selected = index == choice,
                         onClick = { choice = index }
                     )
                     Spacer(
@@ -57,7 +61,7 @@ fun CommonListDialog(
                     )
                     Text(
                         text = value,
-                        color = ExtendTheme.colors.commonColor
+                        color = ExtendTheme.colors.commonTextColor
                     )
                 }
                 if (index != list.size - 1) {
@@ -83,7 +87,7 @@ fun CommonListDialog(
                 ) {
                     Text(
                         text = "确定",
-                        color = ExtendTheme.colors.commonColor
+                        color = ExtendTheme.colors.commonTextColor
                     )
                 }
             }
