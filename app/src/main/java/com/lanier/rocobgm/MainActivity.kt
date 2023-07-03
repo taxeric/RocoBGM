@@ -12,8 +12,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.appbar.MaterialToolbar
@@ -23,7 +22,6 @@ import com.lanier.rocobgm.datastore.AppPreferences
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -84,6 +82,7 @@ class MainActivity : AppCompatActivity() {
             ComposeDuration(
                 playDurationFlow = durationFlow,
                 maxDurationFlow = contentDurationFlow,
+                progressBarWidth = 3.dp,
                 progressBarStartColor = Color(0xFF97D782),
                 progressBarEndColor = Color(0xFF326B24),
                 roundBorder = true
