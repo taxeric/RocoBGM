@@ -92,7 +92,9 @@ class MainVM @Inject constructor(
     private val _sceneFlow = MutableStateFlow(emptyList<SceneData>())
     val sceneFlow: StateFlow<List<SceneData>> = _sceneFlow.asStateFlow()
 
-    fun lazyInit() {}
+    fun lazyInit() {
+        environment.init()
+    }
 
     fun play(sceneData: SceneData) {
         viewModelScope.launch {
@@ -187,10 +189,7 @@ class MainVM @Inject constructor(
             fileExist.invoke(false, "")
             viewModelScope.launch {
                 val responseBody = withContext(Dispatchers.Default) {
-                    getResponseBody(fileUrl) {
-                        println(">>>> connect err ${it.message}")
-                        failure.invoke(it)
-                    }
+                    getResponseBody(fileUrl)
                 }
                 responseBody?.downloadFileWithProgress(internalFile) {
                     println(">>>> error ${it.message}")
@@ -204,7 +203,7 @@ class MainVM @Inject constructor(
                         println(">>>> download complete")
                         downloadComplete.invoke(internalFile.absolutePath)
                     }
-                }
+                }?: failure.invoke(Throwable("Error"))
             }
         } else {
             fileExist.invoke(true, internalFile.absolutePath)
@@ -226,10 +225,7 @@ class MainVM @Inject constructor(
             val uriCase = obtainAudioMediaUri(context = context, filename = filename)
             viewModelScope.launch {
                 val responseBody = withContext(Dispatchers.Default) {
-                    getResponseBody(fileUrl) {
-                        println(">>>> connect err ${it.message}")
-                        failure.invoke(it)
-                    }
+                    getResponseBody(fileUrl)
                 }
                 responseBody?.downloadFileWithProgress2(context, uriCase.uri) {
                     println(">>>> error ${it.message}")
@@ -243,7 +239,7 @@ class MainVM @Inject constructor(
                         println(">>>> download complete")
                         downloadComplete.invoke(publicFile.absolutePath)
                     }
-                }
+                }?: failure.invoke(Throwable("Error"))
             }
         } else {
             fileExist.invoke(true, publicFile.absolutePath)

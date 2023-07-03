@@ -38,7 +38,6 @@ fun initClient(
 fun getResponseBody(
     url: String,
     client: OkHttpClient = okHttpClient,
-    onFailure: (Throwable) -> Unit = {}
 ): ResponseBody? {
     val request = Request.Builder()
         .get()
@@ -49,7 +48,7 @@ fun getResponseBody(
             .execute()
             .body
     } catch (e: Throwable) {
-        onFailure.invoke(e)
+        println(">>>> connect err ${e.message}")
         null
     }
 }

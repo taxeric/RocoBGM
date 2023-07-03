@@ -264,7 +264,7 @@ private fun CacheSongsFilename(
     val mOriginal = produceState(
         initialValue = 0,
         producer = {
-            value = appPreferences.getCacheFilename()
+            value = appPreferences.getCacheFilenameType()
         },
         key1 = updateKey
     ).value

@@ -55,7 +55,7 @@ class AppPreferences @Inject constructor(
         }
 
     suspend fun getPlayOriginal(): Int {
-        return runBlocking { data.last() }[KeyPlayOriginal]?: 0
+        return data.last()[KeyPlayOriginal]?: 0
     }
 
     val playOriginalFlow = context.appDataStore.data.map {
@@ -70,7 +70,7 @@ class AppPreferences @Inject constructor(
     }
 
     suspend fun getPlaybackMode(): Int {
-        return runBlocking { data.last() }[KeyPlaybackMode]?: 0
+        return data.last()[KeyPlaybackMode]?: 0
     }
 
     val playbackModeFlow = context.appDataStore.data.map {
@@ -85,7 +85,7 @@ class AppPreferences @Inject constructor(
     }
 
     suspend fun getCachePath(): Int {
-        return runBlocking { data.last() }[KeyCachePath]?: 0
+        return data.last()[KeyCachePath]?: 0
     }
 
     suspend fun updateCachePath(value: Int) {
@@ -96,7 +96,7 @@ class AppPreferences @Inject constructor(
     }
 
     suspend fun getCacheFilename(): Int {
-        return runBlocking { data.last() }[KeyCacheFilenameType]?: 0
+        return data.last()[KeyCacheFilenameType]?: 0
     }
 
     suspend fun updateCacheFilename(value: Int) {
@@ -107,6 +107,6 @@ class AppPreferences @Inject constructor(
     }
 
     suspend fun getCacheFilenameType(): Int {
-        return runBlocking { data.last() }[KeyCacheFilenameType]?: 0
+        return data.last()[KeyCacheFilenameType]?: 0
     }
 }
