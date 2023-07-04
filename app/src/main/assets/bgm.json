@@ -201,6 +201,115 @@
           "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/102.mp3"
         }
       ]
+    },
+    {
+      "totalScene": 6,
+      "parentScene": "魔法学院",
+      "parentSceneId": 4,
+      "scene": [
+        {
+          "sceneName": "魔法学院",
+          "sceneId": 5,
+          "bgmId": 70,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/70.mp3"
+        },
+        {
+          "sceneName": "魔法学院广场",
+          "sceneId": 399,
+          "bgmId": 70,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/70.mp3"
+        },
+        {
+          "sceneName": "学院内部",
+          "sceneId": 400,
+          "bgmId": 2,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/2.mp3"
+        },
+        {
+          "sceneName": "教学楼",
+          "sceneId": 6,
+          "bgmId": 2,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/2.mp3"
+        },
+        {
+          "sceneName": "图书馆",
+          "sceneId": 7,
+          "bgmId": 2,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/2.mp3"
+        },
+        {
+          "sceneName": "魔法课教室",
+          "sceneId": 31,
+          "bgmId": 2,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/2.mp3"
+        },
+        {
+          "sceneName": "宠物训练室",
+          "sceneId": 51,
+          "bgmId": 2,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/2.mp3"
+        },
+        {
+          "sceneName": "教学楼二楼",
+          "sceneId": 116,
+          "bgmId": 2,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/2.mp3"
+        },
+        {
+          "sceneName": "风纪委员会所",
+          "sceneId": 195,
+          "bgmId": 2,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/2.mp3"
+        },
+        {
+          "sceneName": "宠物潜力训练室",
+          "sceneId": 198,
+          "bgmId": 2,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/2.mp3"
+        },
+        {
+          "sceneName": "教学楼二楼",
+          "sceneId": 116,
+          "bgmId": 2,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/2.mp3"
+        },
+        {
+          "sceneName": "档案室",
+          "sceneId": 199,
+          "bgmId": 2,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/2.mp3"
+        },
+        {
+          "sceneName": "机密档案室",
+          "sceneId": 207,
+          "bgmId": 2,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/2.mp3"
+        },
+        {
+          "sceneName": "幽之迷牢",
+          "sceneId": 321,
+          "bgmId": 25,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/25.mp3"
+        },
+        {
+          "sceneName": "魔法密林",
+          "sceneId": 134,
+          "bgmId": 49,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/49.mp3"
+        },
+        {
+          "sceneName": "时之秘道",
+          "sceneId": 156,
+          "bgmId": 49,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/49.mp3"
+        },
+        {
+          "sceneName": "禁忌的书房",
+          "sceneId": 157,
+          "bgmId": 49,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/49.mp3"
+        }
+      ]
     }
   ]
 }
