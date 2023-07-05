@@ -203,7 +203,7 @@
       ]
     },
     {
-      "totalScene": 6,
+      "totalScene": 17,
       "parentScene": "魔法学院",
       "parentSceneId": 4,
       "scene": [
@@ -308,6 +308,177 @@
           "sceneId": 157,
           "bgmId": 49,
           "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/49.mp3"
+        }
+      ]
+    },
+    {
+      "totalScene": 5,
+      "parentScene": "高黎贡山",
+      "parentSceneId": 5,
+      "scene": [
+        {
+          "sceneName": "高黎贡门廊",
+          "sceneId": 179,
+          "bgmId": 70,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/70.mp3"
+        },
+        {
+          "sceneName": "高黎贡山道",
+          "sceneId": 183,
+          "bgmId": 70,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/70.mp3"
+        },
+        {
+          "sceneName": "同心山顶",
+          "sceneId": 185,
+          "bgmId": 70,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/70.mp3"
+        },
+        {
+          "sceneName": "同心树屋",
+          "sceneId": 203,
+          "bgmId": 70,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/70.mp3"
+        },
+        {
+          "sceneName": "剑庐",
+          "sceneId": 376,
+          "bgmId": 17,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/17.mp3"
+        }
+      ]
+    },
+    {
+      "totalScene": 12,
+      "parentScene": "彼得大道",
+      "parentSceneId": 6,
+      "scene": [
+        {
+          "sceneName": "彼得大道",
+          "sceneId": 22,
+          "bgmId": 42,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/42.mp3"
+        },
+        {
+          "sceneName": "洛克银行",
+          "sceneId": 25,
+          "bgmId": 3,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/3.mp3"
+        },
+        {
+          "sceneName": "福尔摩斯事务所",
+          "sceneId": 29,
+          "bgmId": 3,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/3.mp3"
+        },
+        {
+          "sceneName": "智慧出版社",
+          "sceneId": 24,
+          "bgmId": 3,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/3.mp3"
+        },
+        {
+          "sceneName": "睡美人之书",
+          "sceneId": 133,
+          "bgmId": 49,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/49.mp3"
+        },
+        {
+          "sceneName": "宠物医院",
+          "sceneId": 57,
+          "bgmId": 3,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/3.mp3"
+        },
+        {
+          "sceneName": "爱心教堂",
+          "sceneId": 23,
+          "bgmId": 5,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/5.mp3"
+        },
+        {
+          "sceneName": "镇魂修道院",
+          "sceneId": 352,
+          "bgmId": 56,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/56.mp3"
+        },
+        {
+          "sceneName": "迪莫的梦境",
+          "sceneId": 395,
+          "bgmId": 64,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/64.mp3"
+        },
+        {
+          "sceneName": "夜影回路",
+          "sceneId": 73,
+          "bgmId": 29,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/29.mp3"
+        },
+        {
+          "sceneName": "黑光秘道",
+          "sceneId": 74,
+          "bgmId": 29,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/29.mp3"
+        },
+        {
+          "sceneName": "微光实验室",
+          "sceneId": 75,
+          "bgmId": 29,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/29.mp3"
+        }
+      ]
+    },
+    {
+      "totalScene": 8,
+      "parentScene": "商店街",
+      "parentSceneId": 7,
+      "scene": [
+        {
+          "sceneName": "商店街",
+          "sceneId": 121,
+          "bgmId": 3,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/3.mp3"
+        },
+        {
+          "sceneName": "宠物道具店",
+          "sceneId": 50,
+          "bgmId": 3,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/3.mp3"
+        },
+        {
+          "sceneName": "安妮的幻境",
+          "sceneId": 135,
+          "bgmId": 50,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/50.mp3"
+        },
+        {
+          "sceneName": "月牙桥",
+          "sceneId": 118,
+          "bgmId": 10,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/10.mp3"
+        },
+        {
+          "sceneName": "博得材料屋",
+          "sceneId": 4,
+          "bgmId": 3,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/3.mp3"
+        },
+        {
+          "sceneName": "皮卡服装店",
+          "sceneId": 2,
+          "bgmId": 3,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/3.mp3"
+        },
+        {
+          "sceneName": "服装店二楼",
+          "sceneId": 171,
+          "bgmId": 2,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/2.mp3"
+        },
+        {
+          "sceneName": "巫黑巷",
+          "sceneId": 336,
+          "bgmId": 25,
+          "bgmUrl": "https://github.com/taxeric/RocoGuideSql/raw/main/%E5%9C%BA%E6%99%AFbgm/25.mp3"
         }
       ]
     }
