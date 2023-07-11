@@ -1,10 +1,6 @@
 package com.lanier.rocobgm
 
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.RelativeLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
@@ -23,14 +19,13 @@ class HomeFra(
     private val vm by activityViewModels<MainVM>()
 
     private lateinit var rv: RecyclerView
-    private lateinit var mAdapter: MainAdapter
+    private lateinit var mAdapter: HomeBGMAdapter
 
     override fun initView(view: View) {
         rv = view.findViewById(R.id.recyclerView)
-        mAdapter = MainAdapter(rv).apply {
-            listener = object : OnItemClickEventListener<SceneData> {
+        mAdapter = HomeBGMAdapter(rv).apply {
+            onItemClickEventListener = object : OnItemClickEventListener<SceneData> {
                 override fun onItemClick(data: SceneData, position: Int) {
-                    println(">> $position ${data.sceneName}")
                     val filename = if (CacheConstant.cacheFilename == 0) {
                         val substring = data.bgmUrl.substring(
                             data.bgmUrl.lastIndexOf('/') + 1,
@@ -65,6 +60,12 @@ class HomeFra(
                                     Toast.LENGTH_SHORT
                                 ).show()
                             },
+                            progress = {
+                                val mData = data.copy().apply {
+                                    downloadProgress = it
+                                }
+                                mAdapter.notifyItem(mData, position)
+                            },
                             downloadComplete = { path ->
                                 val mData = refreshData(data, position, filepath = path)
                                 play(mData)
@@ -73,6 +74,16 @@ class HomeFra(
                     } else {
                         play(data)
                     }
+                }
+            }
+
+            onFavouriteListener = object : HomeBGMAdapter.OnItemFavouriteListener {
+                override fun onFavourite(data: SceneData, position: Int) {
+                    if (data.favourite) {
+                    } else {
+                    }
+                    val mData = data.copy(favourite = !data.favourite)
+                    mAdapter.notifyItem(mData, position)
                 }
             }
         }
@@ -106,62 +117,5 @@ class HomeFra(
         }
 
         vm.obtainData(requireContext().assets)
-    }
-}
-
-class MainAdapter(
-    private val rv: RecyclerView
-): RecyclerView.Adapter<MainVH>(), View.OnClickListener {
-
-    var listener: OnItemClickEventListener<SceneData>? = null
-
-    private val _data = mutableListOf<SceneData>()
-    var data: List<SceneData>
-        get() = _data
-        set(value) {
-            _data.clear()
-            _data.addAll(value)
-            notifyDataSetChanged()
-        }
-
-    fun notifyItem(data: SceneData, position: Int) {
-        _data[position] = data
-        notifyItemChanged(position)
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainVH {
-        return MainVH(
-            LayoutInflater
-                .from(parent.context)
-                .inflate(R.layout.item_rv_song, parent, false)
-        )
-    }
-
-    override fun getItemCount() = _data.size
-
-    override fun onBindViewHolder(holder: MainVH, position: Int) {
-        holder.bind(_data[position])
-        holder.singleLayout.setOnClickListener(this)
-    }
-
-    override fun onClick(v: View) {
-        val position = rv.getChildAdapterPosition(v)
-        listener?.onItemClick(_data[position], position)
-    }
-}
-
-class MainVH(
-    view: View
-): RecyclerView.ViewHolder(view) {
-
-    val singleLayout: RelativeLayout = view.findViewById(R.id.singleLayout)
-    private val title = view.findViewById<TextView>(R.id.tvSceneTitle)
-    private val playState = view.findViewById<TextView>(R.id.tvPlayState)
-    private val downloadState = view.findViewById<TextView>(R.id.tvDownloadState)
-
-    fun bind(data: SceneData) {
-        title.text = data.sceneName
-        downloadState.text = if (data.downloaded) {"ok"} else "${data.downloadState}"
-        playState.text = "${data.playState}"
     }
 }
