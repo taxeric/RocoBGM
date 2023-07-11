@@ -22,7 +22,6 @@ import com.lanier.rocobgm.datastore.AppPreferences
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -68,7 +67,9 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         lifecycleScope.launch {
-            CacheConstant.bind(localPreferences.dataFlow.last())
+            localPreferences.dataFlow.collect {
+                CacheConstant.bind(it)
+            }
         }
 
         ivController.setOnClickListener {

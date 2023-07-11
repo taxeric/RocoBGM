@@ -1,6 +1,7 @@
 package com.lanier.rocobgm
 
 import android.content.Context
+import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import androidx.core.net.toUri
@@ -95,18 +96,24 @@ class SongEnvironment @Inject constructor(
         override fun onPlaybackStateChanged(playbackState: Int) {
             if (playbackState == ExoPlayer.STATE_ENDED) {
                 exoPlayer.seekTo(0)
-                exoPlayer.pause()
+                if (playbackMode.value == 1) {
+                    exoPlayer.pause()
+                }
             }
             _playbackState.tryEmit(playbackState)
         }
     }
 
     override fun play(data: SceneData) {
-        if (data.path.isEmpty() && data.uri.isEmpty()) {
+        if (data.path.isEmpty() && data.bgmUrl.isEmpty()) {
             return
         }
         val uri = File(data.path).toUri()
-        exoPlayer.setMediaItem(MediaItem.fromUri(uri))
+        if (playOriginalType.value == 0) {
+            exoPlayer.setMediaItem(MediaItem.fromUri(uri))
+        } else {
+            exoPlayer.setMediaItem(MediaItem.fromUri(Uri.parse(data.bgmUrl)))
+        }
 //        exoPlayer.setMediaItem(MediaItem.fromUri(data.bgmUrl))
         exoPlayer.prepare()
         exoPlayer.play()

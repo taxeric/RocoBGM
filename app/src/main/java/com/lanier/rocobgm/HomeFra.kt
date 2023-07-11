@@ -31,7 +31,7 @@ class HomeFra(
                             data.bgmUrl.lastIndexOf('/') + 1,
                             data.bgmUrl.length
                         )
-                        "$substring.mp3"
+                        substring
                     } else {
                         "${data.sceneName}.mp3"
                     }
