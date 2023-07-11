@@ -13,9 +13,9 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -102,17 +102,8 @@ private fun PlayOriginalItem(
     var modify by remember {
         mutableStateOf(false)
     }
-    var updateKey by remember {
-        mutableStateOf(0)
-    }
-    val playOriginal = produceState(
-        initialValue = 0,
-        producer = {
-            value = appPreferences.getPlayOriginal()
-        },
-        key1 = updateKey
-    ).value
-    val tips = remember {
+    val playOriginal = appPreferences.playOriginalFlow.collectAsState(initial = 0).value
+    val tips = remember(playOriginal) {
         when (PlayOriginal.values()[playOriginal]) {
             PlayOriginal.PlayAfterDownload -> PlayOriginal.PlayAfterDownload.desc
             PlayOriginal.PlayDirect -> PlayOriginal.PlayDirect.desc
@@ -134,7 +125,6 @@ private fun PlayOriginalItem(
             if (it != -1 && it != playOriginal) {
                 scope.launch {
                     appPreferences.updatePlayOriginal(it)
-                    updateKey ++
                 }
             }
             modify = !modify
@@ -154,17 +144,8 @@ private fun PlaybackSongsMode(
     var modify by remember {
         mutableStateOf(false)
     }
-    var updateKey by remember {
-        mutableStateOf(0)
-    }
-    val playbackOriginal = produceState(
-        initialValue = 0,
-        producer = {
-            value = appPreferences.getPlaybackMode()
-        },
-        key1 = updateKey
-    ).value
-    val tips = remember {
+    val playbackOriginal = appPreferences.playbackModeFlow.collectAsState(initial = 0).value
+    val tips = remember(playbackOriginal) {
         when (PlaybackMode.values()[playbackOriginal]) {
             PlaybackMode.ResetDuration -> PlaybackMode.ResetDuration.desc
             PlaybackMode.ResetDurationAndPause -> PlaybackMode.ResetDurationAndPause.desc
@@ -186,7 +167,6 @@ private fun PlaybackSongsMode(
             if (it != -1 && it != playbackOriginal) {
                 scope.launch {
                     appPreferences.updatePlayMode(it)
-                    updateKey ++
                 }
             }
             modify = !modify
@@ -206,17 +186,8 @@ private fun CacheSongsPath(
     var modify by remember {
         mutableStateOf(false)
     }
-    var updateKey by remember {
-        mutableStateOf(0)
-    }
-    val mOriginal = produceState(
-        initialValue = 0,
-        producer = {
-            value = appPreferences.getCachePath()
-        },
-        key1 = updateKey
-    ).value
-    val tips = remember {
+    val mOriginal = appPreferences.cachePathFlow.collectAsState(initial = 0).value
+    val tips = remember(mOriginal) {
         when (CacheFilePath.values()[mOriginal]) {
             CacheFilePath.InternalPath -> CacheFilePath.InternalPath.desc
             CacheFilePath.ExternalPath -> CacheFilePath.ExternalPath.desc
@@ -238,7 +209,6 @@ private fun CacheSongsPath(
             if (it != -1 && it != mOriginal) {
                 scope.launch {
                     appPreferences.updateCachePath(it)
-                    updateKey ++
                 }
             }
             modify = !modify
@@ -258,17 +228,8 @@ private fun CacheSongsFilename(
     var modify by remember {
         mutableStateOf(false)
     }
-    var updateKey by remember {
-        mutableStateOf(0)
-    }
-    val mOriginal = produceState(
-        initialValue = 0,
-        producer = {
-            value = appPreferences.getCacheFilenameType()
-        },
-        key1 = updateKey
-    ).value
-    val tips = remember {
+    val mOriginal = appPreferences.cacheFilenameTypeFlow.collectAsState(initial = 0).value
+    val tips = remember(mOriginal) {
         when (CacheFilenameType.values()[mOriginal]) {
             CacheFilenameType.AccordingToId -> CacheFilenameType.AccordingToId.desc
             CacheFilenameType.AccordingToFilename -> CacheFilenameType.AccordingToFilename.desc
@@ -290,7 +251,6 @@ private fun CacheSongsFilename(
             if (it != -1 && it != mOriginal) {
                 scope.launch {
                     appPreferences.updateCacheFilename(it)
-                    updateKey ++
                 }
             }
             modify = !modify
