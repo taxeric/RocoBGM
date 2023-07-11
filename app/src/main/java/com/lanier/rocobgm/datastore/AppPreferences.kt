@@ -7,7 +7,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.lanier.rocobgm.CacheConstantEntity
-import kotlinx.coroutines.flow.last
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
@@ -55,7 +55,7 @@ class AppPreferences @Inject constructor(
         }
 
     suspend fun getPlayOriginal(): Int {
-        return data.last()[KeyPlayOriginal]?: 0
+        return data.first()[KeyPlayOriginal]?: 0
     }
 
     val playOriginalFlow = context.appDataStore.data.map {
@@ -70,7 +70,7 @@ class AppPreferences @Inject constructor(
     }
 
     suspend fun getPlaybackMode(): Int {
-        return data.last()[KeyPlaybackMode]?: 0
+        return data.first()[KeyPlaybackMode]?: 0
     }
 
     val playbackModeFlow = context.appDataStore.data.map {
@@ -85,7 +85,11 @@ class AppPreferences @Inject constructor(
     }
 
     suspend fun getCachePath(): Int {
-        return data.last()[KeyCachePath]?: 0
+        return data.first()[KeyCachePath]?: 0
+    }
+
+    val cachePathFlow = context.appDataStore.data.map {
+        it[KeyCachePath]?: 0
     }
 
     suspend fun updateCachePath(value: Int) {
@@ -95,8 +99,12 @@ class AppPreferences @Inject constructor(
             }
     }
 
-    suspend fun getCacheFilename(): Int {
-        return data.last()[KeyCacheFilenameType]?: 0
+    suspend fun getCacheFilenameType(): Int {
+        return data.first()[KeyCacheFilenameType]?: 0
+    }
+
+    val cacheFilenameTypeFlow = context.appDataStore.data.map {
+        it[KeyCacheFilenameType]?: 0
     }
 
     suspend fun updateCacheFilename(value: Int) {
@@ -104,9 +112,5 @@ class AppPreferences @Inject constructor(
             .edit {
                 it[KeyCacheFilenameType] = value
             }
-    }
-
-    suspend fun getCacheFilenameType(): Int {
-        return data.last()[KeyCacheFilenameType]?: 0
     }
 }
